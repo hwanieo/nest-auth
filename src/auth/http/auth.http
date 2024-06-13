@@ -18,3 +18,15 @@ Content-Type: application/json
   "password": "1234",
   "email": "jonghwan@test.com"
 }
+
+### login2
+POST {{server}}/auth/login2
+Content-Type: application/json
+
+{
+  "password": "1234",
+  "email": "jonghwan@test.com"
+}
+
+### guard test
+GET {{server}}/auth/guard-test
