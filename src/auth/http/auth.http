@@ -30,3 +30,50 @@ Content-Type: application/json
 
 ### guard test
 GET {{server}}/auth/guard-test
+
+### login 3
+POST {{server}}/auth/login3
+Content-Type: application/json
+
+{
+  "password": "1234",
+  "email": "jonghwan@test.com"
+}
+
+### login 3 틀린 비밀번호
+POST {{server}}/auth/login3
+Content-Type: application/json
+
+{
+  "password": "12345",
+  "email": "jonghwan@test.com"
+}
+
+### guard test2
+GET {{server}}/auth/guard-test2
+
+
+
+
+
+
+
+
+
+
+
+
+### login 4
+POST {{server}}/auth/login4
+Content-Type: application/json
+
+{
+  "password": "1234",
+  "email": "jonghwan@test.com"
+}
+
+### login 4 + guard test
+GET {{server}}/auth/guard-test
+
+### login 4 + guard test2
+GET {{server}}/auth/guard-test2

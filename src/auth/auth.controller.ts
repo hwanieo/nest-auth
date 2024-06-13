@@ -8,7 +8,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
-import { LoginGuard } from 'src/auth/guards/login.guard';
+import {
+  AuthenticatedGuard,
+  LocalAuthGuard,
+  LoginGuard,
+} from 'src/auth/guards/login.guard';
 import { CreateUserDto } from 'src/user/dto/user.dto';
 
 @Controller('auth')
@@ -34,7 +38,7 @@ export class AuthController {
       });
       return res.status(200).send({ message: 'login success' });
     } else {
-      return res.status(401).send({ message: 'Invalid credentials' });
+      return res.status(401).send({ message: 'Unauthorized' });
     }
   }
 
@@ -42,17 +46,43 @@ export class AuthController {
   @Post('login2')
   async login2(@Request() req, @Response() res) {
     if (!req.cookies['login'] && req.user) {
-      res.cookie('login', JSON.stringify(req.user), {
+      res.cookie('login', JSON.stringify(req.user.email), {
         httpOnly: true,
         maxAge: 1000 * 10,
       });
+      return res.status(200).send({ message: 'login2 success' });
     }
-    return res.send({ message: 'login2 success' });
+    return res.status(401).send({ message: 'Unauthorized' });
   }
 
   @UseGuards(LoginGuard)
   @Get('guard-test')
   guardTest() {
     return '로그인된 때만 이 글이 보입니다.';
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('login3')
+  login3(@Request() req) {
+    return req.user;
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('guard-test2')
+  testGuardWithSession(@Request() req) {
+    return req.user;
+  }
+
+  @UseGuards(LoginGuard, LocalAuthGuard)
+  @Post('login4')
+  login4(@Request() req, @Response() res) {
+    if (!req.cookies['login'] && req.user) {
+      res.cookie('login', JSON.stringify(req.user.email), {
+        httpOnly: true,
+        maxAge: 1000 * 10,
+      });
+      return res.status(200).send({ message: 'login2 success' });
+    }
+    return res.status(401).send({ message: 'Unauthorized' });
   }
 }
