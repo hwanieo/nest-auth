@@ -7,7 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { User } from 'src/user/entity/user.entity';
+import { CreateUserDto, UpdateUserDto } from 'src/user/dto/user.dto';
 import { UserService } from 'src/user/user.service';
 
 @Controller('user')
@@ -15,7 +15,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('/create')
-  async createUser(@Body() user: User) {
+  async createUser(@Body() user: CreateUserDto) {
     await this.userService.createUser(user);
     return 'User created success';
   }
@@ -26,7 +26,10 @@ export class UserController {
   }
 
   @Put('/update/:email')
-  async updateUser(@Param('email') email: string, @Body() _user: User) {
+  async updateUser(
+    @Param('email') email: string,
+    @Body() _user: UpdateUserDto,
+  ) {
     return await this.userService.updateUser(email, _user);
   }
 
