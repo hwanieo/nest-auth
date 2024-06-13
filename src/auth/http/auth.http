@@ -1,0 +1,11 @@
+@server = http://localhost:3000
+
+### register
+POST {{server}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "jonghwan",
+  "password": "1234",
+  "email": "jonghwan@test.com"
+}
