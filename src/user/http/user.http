@@ -1,0 +1,27 @@
+@server = http://localhost:3000
+
+### create
+POST {{server}}/user/create
+Content-Type: application/json
+
+{
+  "username": "jonghwan",
+  "password": "1234",
+  "email": "jonghwan@test.com"
+}
+
+### get user
+GET {{server}}/user/getUser/jonghwan@test.com
+
+### update user
+PUT {{server}}/user/update/jonghwan@test.com
+Content-Type: application/json
+
+{
+  "email": "jonghwan@test.com",
+  "username": "이종환",
+  "password": "test12345"
+}
+
+### delete user
+DELETE {{server}}/user/delete/jonghwan@test.com
